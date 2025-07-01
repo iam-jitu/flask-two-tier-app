@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   flask:
     image: two-tier-backend:latest
@@ -19,24 +17,31 @@ services:
     image: mysql:latest
     environment:
       - MYSQL_ROOT_PASSWORD=root@1234
-      - MYSQL_DATABASE=devops        # ✅ Corrected from MYSQL_DB
-      - MYSQL_USER=vicky             # ✅ Added
-      - MYSQL_PASSWORD=vicky123      # ✅ Added
+      - MYSQL_DATABASE=devops
+      - MYSQL_USER=vicky
+      - MYSQL_PASSWORD=vicky123
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
-      - mynetwork                    # ✅ Added to share network with other containers
+      - mynetwork
 
-  adminer:
-    image: adminer
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
     ports:
-      - "8080:8080"
+      - "8080:80"
+    environment:
+      - PMA_HOST=mysql
+      - PMA_USER=vicky
+      - PMA_PASSWORD=vicky123
+    depends_on:
+      - mysql
     networks:
-      - mynetwork                    # ✅ Added to same network
+      - mynetwork
 
 volumes:
   mysql_data:
 
 networks:
   mynetwork:
+
 
