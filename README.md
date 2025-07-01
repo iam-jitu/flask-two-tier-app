@@ -1,7 +1,18 @@
  
-# Flask App with MySQL Docker Setup
+# Flask + MySQL + phpMyAdmin (Production-Ready with Docker & Nginx)
 
-This is a simple Flask app that interacts with a MySQL database. The app allows users to submit messages, which are then stored in the database and displayed on the frontend.
+## Features
+- Flask app served via Gunicorn
+- MySQL with volume for persistence
+- phpMyAdmin to inspect database via browser
+- Nginx as a reverse proxy
+- Docker Compose for orchestration
+
+## Getting Started
+
+### 🛠️ Build & Run
+```bash
+docker compose up --build -d
 
 ## Prerequisites
 
