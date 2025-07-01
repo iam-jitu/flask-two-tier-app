@@ -27,9 +27,13 @@ jobs:
     - name: Wait for Flask container to start
       run: sleep 15
 
-    - name: Test Flask app inside container network
+    - name: Wait for services to initialize
+      run: sleep 10
+
+    - name: Test Flask app inside Docker container
       run: |
         docker compose exec -T flask curl --retry 5 --retry-connrefused --retry-delay 2 http://localhost:5000/
+
 
     - name: Teardown
       if: always()
