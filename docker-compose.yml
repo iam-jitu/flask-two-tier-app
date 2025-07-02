@@ -1,29 +1,25 @@
 services:
   flask:
-    image: two-tier-backend:latest
+    build:
+      context: .
+      dockerfile: Dockerfile  # Or Dockerfile-multistage if you're using that
     ports:
       - "5000:5000"
     environment:
       - MYSQL_HOST=mysql
-      - MYSQL_USER=vicky
-      - MYSQL_PASSWORD=vicky123
-      - MYSQL_DB=devops
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_DB=messages
     depends_on:
       - mysql
-    networks:
-      - mynetwork
 
   mysql:
     image: mysql:latest
+    ports:
+      - "3306:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=root@1234
-      - MYSQL_DATABASE=devops
-      - MYSQL_USER=vicky
-      - MYSQL_PASSWORD=vicky123
-    volumes:
-      - mysql_data:/var/lib/mysql
-    networks:
-      - mynetwork
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=messages
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -31,17 +27,3 @@ services:
       - "8080:80"
     environment:
       - PMA_HOST=mysql
-      - PMA_USER=vicky
-      - PMA_PASSWORD=vicky123
-    depends_on:
-      - mysql
-    networks:
-      - mynetwork
-
-volumes:
-  mysql_data:
-
-networks:
-  mynetwork:
-
-
